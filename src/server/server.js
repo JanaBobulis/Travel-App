@@ -35,7 +35,7 @@ app.get('/all', getData);
 };
 
 //POST route with three pieces of data 
-app.post('/add', function (req, res){
+app.post('/addGeonames', function (req, res){
      newData = { 
         date: req.body.date,
         lng: req.body.lng,
@@ -46,3 +46,13 @@ app.post('/add', function (req, res){
         console.log(projectData);
         res.send(projectData);
 });
+
+app.post('/addWeatherbit', function(req, res) {
+   newData = {
+      mintemp: req.body.min_temp,
+      hightemp: req.body.high_temp
+   }
+   projectData = newData;
+   console.log(projectData);
+   res.send(projectData);
+})
