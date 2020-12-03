@@ -4,11 +4,13 @@
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
-// Personal API Key for OpenWeatherMap API
+// Personal API Key for Geonames
 const baseURL = 'http://api.geonames.org/search?name=';
 const apiKey = '&maxRows=1&type=json&maxRows=10&username=janabobulis';
 
-//latitude, longtitude, country
+// Personal API Key for Weatherbit
+const baseURL2 = "https://api.weatherbit.io/v2.0/forecast/daily?"; 
+const apiKey2 = 'lat=${lat}&lon=${lng}&key=8ce0780333904b48a0c241412d32cccc';
 
 //Write an async function in app.js that uses fetch() to make a GET request to the OpenWeatherMap API.
 const getData = async (baseURL, city, apiKey)=>{
