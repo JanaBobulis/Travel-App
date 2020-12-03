@@ -64,6 +64,9 @@ const updateUI = async() => {
         document.getElementById('latitude').innerHTML = `Latitude: ${allData.lat}`;
         document.getElementById('placename').innerHTML = `City name: ${allData.name}`;
         document.getElementById('date').innerHTML = `Date: ${allData.date}`;
+        document.getElementById('country-name').innerHTML = `Country: ${allData.countryName}`;
+        document.getElementById('min-temp').innerHTML = `Min temperature: ${allData.mintemp}`
+        document.getElementById('high-temp').innerHTML = `Min temperature: ${allData.hightemp}`
 
     }catch(error){
         console.log("error", error);
