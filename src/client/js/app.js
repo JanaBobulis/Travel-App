@@ -38,17 +38,23 @@ const getData2 = async (baseURL2, lat, lng, apiKey2)=>{
 
 function performAction(e) {
     let city = document.getElementById('city').value;
+    let lng = document.getElementById('longtitude').value;
+    let lat = document.getElementById('latitude').value;
     getData(baseURL, city, apiKey)
+    getData2(baseURL2, lat, lng, apiKey2)
 
     .then(function(data){
         console.log(data)
-        postData('/add', {lng: data.geonames[0].lng, lat: data.geonames[0].lat, date: newDate, name: data.geonames[0].name})
+        postData('/addGeonames', {lng: data.geonames[0].lng, lat: data.geonames[0].lat, date: newDate, name: data.geonames[0].name, countryName: data.geonames[0].countryName})
+    .then(function(weatherData) {
+        console.log(weatherData)
+        postData('/addWeatherbit', {mintemp: weatherData.data[0].min_temp, hightemp: weatherData.data[0].high_temp});
+    })
     .then(function() {
         updateUI()
     })
 })
 }
-
 // After your successful retrieval of the weather data, you will need to chain another Promise that makes a POST request to add the API data, as well as data entered by the user, to your app. You will need to write another async function to make this POST request. The function should receive a path and a data object. The data object should include temperature, date, user response
 const updateUI = async() => {
     const req = await fetch('http://localhost:4040/all');
