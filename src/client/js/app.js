@@ -37,6 +37,24 @@ const getData2 = async (baseURL2, lat, lng, apiKey2)=>{
 // Event listener to add function to existing HTML DOM element with a callback function to execute when it is clicked. Inside that callback function call your async GET request with the parameters: base url user entered zip code (see input in html with id zip),personal API key
 
 function performAction(e) {
+    //countdown
+    var timer = document.getElementById("departure-date").value;
+
+    var now = new Date().getTime();
+    var distance = timer - now;
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown-entry").innerHTML = days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ";
+
+    if (distance < 0) {
+      clearInterval();
+      document.getElementById("countdown-entry").innerHTML = "expired";
+    }
     let city = document.getElementById('city').value;
     let lng = document.getElementById('longtitude').value;
     let lat = document.getElementById('latitude').value;
