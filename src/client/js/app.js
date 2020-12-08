@@ -24,11 +24,15 @@ const getData = async (baseURL, city, apiKey)=>{
 }
 
 //GET request to Weatherbit
-const getData2 = async (baseURL2, lat, lng, apiKey2)=>{
-    const res = await fetch(baseURL2 + lat + lng + apiKey2);
+const getWeatherbitData = async (lat, lng) => {
+    const res = await fetch(baseURL2 + "lat=" + lat + "&lon=" + lng + apiKey2);
     try {
-        const weatherData = await res.json();
-        return weatherData;
+        const data = await res.json();
+        const weatherData = {};
+        weatherData.description = data.data[0].weather.description;
+        weatherData.temp = data.data[0].temp;
+        console.log("weatherbit get request", data);
+        return data;
     } catch(error) {
         console.log("error", error);
     }
