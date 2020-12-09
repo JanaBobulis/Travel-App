@@ -17,6 +17,7 @@ const getGeonamesData = async (baseURL, city, apiKey)=>{
     const res = await fetch(baseURL + city + apiKey);
     try {
         const data = await res.json();
+        console.log("Geonames get request", data);
         return data;
     } catch(error) {
         console.log("error", error);
