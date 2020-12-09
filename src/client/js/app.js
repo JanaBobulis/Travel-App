@@ -13,7 +13,7 @@ const baseURL2 = "https://api.weatherbit.io/v2.0/forecast/daily?";
 const apiKey2 = 'lat=${lat}&lon=${lng}&key=8ce0780333904b48a0c241412d32cccc';
 
 //Get request to Geonames
-const getData = async (baseURL, city, apiKey)=>{
+const getGeonamesData = async (baseURL, city, apiKey)=>{
     const res = await fetch(baseURL + city + apiKey);
     try {
         const data = await res.json();
