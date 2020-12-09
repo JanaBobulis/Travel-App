@@ -48,6 +48,14 @@ function performAction(e) {
     .then(function(geoData){
         console.log(geoData, "Geonames API works")
         return postData('/addGeonames', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, date: newDate, name: geoData.geonames[0].name, countryName: geoData.geonames[0].countryName})
+      
+    .then(function(res) {
+        console.log("response from geonames", res);
+        const lat = res.lat
+        const lon = res.lng
+        return {lat, lon}
+    })
+        
     .then(function(weatherData) {
         console.log(weatherData)
         postData('/addWeatherbit', {mintemp: weatherData.data[0].min_temp, hightemp: weatherData.data[0].high_temp});
