@@ -55,6 +55,12 @@ function performAction(e) {
         const lon = res.lng
         return {lat, lon}
     })
+    
+    //gets data from the above geonames response (latitude, longtitude) and passes on to weatherbit
+    .then(function({lat, lon}) {
+        console.log("receiving from getWeatherbit", lat, lon)
+        getWeatherbitData(lat, lon)
+    })
         
     .then(function(weatherData) {
         console.log(weatherData)
