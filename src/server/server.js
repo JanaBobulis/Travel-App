@@ -16,8 +16,6 @@ app.use(express.static('dist'));
 const cors = require('cors');
 const { response } = require('express');
 app.use(cors()); //connecting project dependencies 
-// Initialize the main project folder
-app.use(express.static('website'));
 
 // Setup Server
 const port = 4040; 
@@ -43,16 +41,16 @@ app.post('/addGeonames', function (req, res){
         name: req.body.name
         }
         projectData = newData;
-        console.log(projectData);
+        console.log(projectData, "server side post geonames");
         res.send(projectData);
 });
 
 app.post('/addWeatherbit', function(req, res) {
    newData = {
-      mintemp: req.body.min_temp,
-      hightemp: req.body.high_temp
+      temp: req.body.temp,
+      description: req.body.description
    }
    projectData = newData;
-   console.log(projectData);
+   console.log(projectData, "server side post weatherbit");
    res.send(projectData);
 })
