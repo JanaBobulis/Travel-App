@@ -84,8 +84,8 @@ const updateUI = async() => {
         document.getElementById('placename').innerHTML = `City name: ${allData.name}`;
         document.getElementById('date').innerHTML = `Date: ${allData.date}`;
         document.getElementById('country-name').innerHTML = `Country: ${allData.countryName}`;
-        document.getElementById('temp').innerHTML = `Min temperature: ${allData.temp}`
-        document.getElementById('description').innerHTML = `Min temperature: ${allData.description}`
+        document.getElementById('temp').innerHTML = `Temperature: ${allData.temp}`
+        document.getElementById('description').innerHTML = `Description: ${allData.description}`
 
     }catch(error){
         console.log("error", error);
