@@ -62,10 +62,13 @@ function performAction(e) {
         getWeatherbitData(lat, lon)
     })
         
-    .then(function(weatherData) {
-        console.log(weatherData)
-        postData('/addWeatherbit', {mintemp: weatherData.data[0].min_temp, hightemp: weatherData.data[0].high_temp});
-    })
+    //.then(function(weatherbit){
+    //    console.log(weatherbit, "weatherbit API works")
+    //    return postData('/addWeatherbit', {
+    //        temp: weatherbit.data[0].temp, 
+    //        description: weatherbit.data[0].weather.description})
+    //    })
+        
     .then(function() {
         updateUI()
     })
