@@ -43,14 +43,11 @@ const getWeatherbitData = async (lat, lng) => {
 
 function performAction(e) {
     let city = document.getElementById('city').value;
-    let lng = document.getElementById('longtitude').value;
-    let lat = document.getElementById('latitude').value;
-    getData(baseURL, city, apiKey)
-    getData2(baseURL2, lat, lng, apiKey2)
+    getGeonamesData(baseURL, city, apiKey)
 
-    .then(function(data){
-        console.log(data)
-        postData('/addGeonames', {lng: data.geonames[0].lng, lat: data.geonames[0].lat, date: newDate, name: data.geonames[0].name, countryName: data.geonames[0].countryName})
+    .then(function(geoData){
+        console.log(geoData, "Geonames API works")
+        return postData('/addGeonames', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, date: newDate, name: geoData.geonames[0].name, countryName: geoData.geonames[0].countryName})
     .then(function(weatherData) {
         console.log(weatherData)
         postData('/addWeatherbit', {mintemp: weatherData.data[0].min_temp, hightemp: weatherData.data[0].high_temp});
