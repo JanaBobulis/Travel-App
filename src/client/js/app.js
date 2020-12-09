@@ -9,8 +9,8 @@ const baseURL = 'http://api.geonames.org/search?name=';
 const apiKey = '&maxRows=1&type=json&maxRows=10&username=janabobulis';
 
 // Personal API Key for Weatherbit
-const baseURL2 = "https://api.weatherbit.io/v2.0/forecast/daily?"; 
-const apiKey2 = 'lat=${lat}&lon=${lng}&key=8ce0780333904b48a0c241412d32cccc';
+const baseURL2 = 'https://api.weatherbit.io/v2.0/forecast/daily?'; 
+const apiKey2 = '&key=8ce0780333904b48a0c241412d32cccc';
 
 //Get request to Geonames
 const getGeonamesData = async (baseURL, city, apiKey)=>{
