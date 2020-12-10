@@ -34,22 +34,14 @@ app.get('/all', getData);
 
 //POST route with three pieces of data 
 app.post('/addGeonames', function (req, res){
-     newData = { 
-        date: req.body.date,
-        lng: req.body.lng,
-        lat: req.body.lat,
-        name: req.body.name
-        }
-        projectData = newData;
-        console.log(projectData, "server side post geonames");
-        res.send(projectData);
+     newData = req.body;
+     projectData = newData;
+     console.log(projectData, "server side post geonames");
+     res.send(projectData);
 });
 
 app.post('/addWeatherbit', function(req, res) {
-   newData = {
-      temp: req.body.temp,
-      description: req.body.description
-   }
+   newData = req.body;
    projectData = newData;
    console.log(projectData, "server side post weatherbit");
    res.send(projectData);
