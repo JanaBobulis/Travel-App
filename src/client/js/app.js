@@ -46,7 +46,7 @@ async function performAction(e) {
     const geoData = await getGeonamesData(baseURL, city, apiKey);
     console.log(geoData, "geonames API works");
 
-    const res = await postData('/addGeonames', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, date: newDate, name: geoData.geonames[0].name, countryName: geoData.geonames[0].countryName});
+    const res = await postData('/add', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, date: newDate, name: geoData.geonames[0].name, countryName: geoData.geonames[0].countryName});
 
     console.log("response from geonames", res);
     const lat = res.lat;
@@ -59,7 +59,7 @@ async function performAction(e) {
     const weatherbitData = await getWeatherbitData(lat, lon);
     console.log(weatherbitData, "weatherbit API works");
 
-    const responses = await postData('/addWeatherbit', {temp: weatherbitData.data[0].temp, description: weatherbitData.data[0].weather.description});
+    const responses = await postData('/add', {temp: weatherbitData.data[0].temp, description: weatherbitData.data[0].weather.description});
     console.log(responses);
 
     updateUI()
