@@ -42,30 +42,27 @@ const getWeatherbitData = async (lat, lng) => {
 // Event listener to add function to existing HTML DOM element with a callback function to execute when it is clicked. Inside that callback function call your async GET request with the parameters: base url user entered zip code (see input in html with id zip),personal API key
 
 async function performAction(e) {
-    let city = document.getElementById('city').value;
-    const geoData = await getGeonamesData(baseURL, city, apiKey)
-    console.log(geoData, "Geonames API works")
-   
-    const res = await postData('/addGeonames', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, date: newDate, name: geoData.geonames[0].name, countryName: geoData.geonames[0].countryName})
+    const city = document.getElementById('city').value;
+    const geoData = await getGeonamesData(baseURL, city, apiKey);
+    console.log(geoData, "geonames API works");
+
+    const res = await postData('/addGeonames', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, date: newDate, name: geoData.geonames[0].name, countryName: geoData.geonames[0].countryName});
+
     console.log("response from geonames", res);
-    
-    const lat = res.lat
-    const lon = res.lng
+    const lat = res.lat;
+    const lon = res.lng;
 
     //gets data from the above geonames response (latitude, longtitude) and passes on to weatherbit
     console.log("receiving from getWeatherbit", lat, lon);
-    getWeatherbitData(lat, lon);
-        
-    //.then(function(weatherbit){
-    //    console.log(weatherbit, "weatherbit API works")
-    //    return postData('/addWeatherbit', {
-    //        temp: weatherbit.data[0].temp, 
-    //        description: weatherbit.data[0].weather.description})
-    //    })
-        
+    await getWeatherbitData(lat, lon);
 
-        updateUI()
-})
+    const weatherbitData = await getWeatherbitData(lat, lon);
+    console.log(weatherbitData, "weatherbit API works");
+
+    const responses = await postData('/addWeatherbit', {temp: weatherbitData.data[0].temp, description: weatherbitData.data[0].weather.description});
+    console.log(responses);
+
+    updateUI()
 }
 
 const updateUI = async() => {
