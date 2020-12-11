@@ -68,14 +68,17 @@ async function performAction(e) {
 const updateUI = async() => {
     const req = await fetch('http://localhost:4040/all');
     try{
+        console.log("UI request")
         const allData = await req.json();
         document.getElementById('longtitude').innerHTML = `Longtitude: ${allData.lng}`;
         document.getElementById('latitude').innerHTML = `Latitude: ${allData.lat}`;
+        console.log(allData.lat);
         document.getElementById('placename').innerHTML = `City name: ${allData.name}`;
         document.getElementById('date').innerHTML = `Date: ${allData.date}`;
         document.getElementById('country-name').innerHTML = `Country: ${allData.countryName}`;
-        document.getElementById('temp').innerHTML = `Temperature: ${allData.temp}`
-        document.getElementById('description').innerHTML = `Description: ${allData.description}`
+        document.getElementById('temp').innerHTML = `Temperature: ${allData.temp}`;
+        document.getElementById('description').innerHTML = `Description: ${allData.description}`;
+        console.log(allData.description);
 
     }catch(error){
         console.log("error", error);
