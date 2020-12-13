@@ -61,6 +61,17 @@ async function performAction(e) {
 
     const responses = await postData('/add', {temp: weatherbitData.data[0].temp, description: weatherbitData.data[0].weather.description});
     console.log(responses);
+    
+    //countdown 
+    const end = document.getElementById("dep-date").value
+    const now = new Date().getTime; 
+    const departure = new Date(end).getTime();
+    console.log(departure);
+
+    const daysTil =  Math.ceil(((departure-d.getTime())/(1000 * 60 * 60 * 24)));
+    console.log(daysTil);
+       
+    document.getElementById("countdown-entry").innerHTML = `Days until departure: ${daysTil} days`;
 
     updateUI()
 }
