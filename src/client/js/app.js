@@ -131,5 +131,8 @@ const postData = async (url ='', data = {}) => {
 }
 
 export { performAction }
+export { getGeonamesData }
+export { getWeatherbitData }
+export { getImageData }
 
 
