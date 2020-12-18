@@ -90,16 +90,22 @@ async function performAction(e) {
 const updateUI = async() => {
     const req = await fetch('http://localhost:4040/all');
     try{
-        console.log("UI request")
         const allData = await req.json();
-        document.getElementById('longtitude').innerHTML = `Longtitude: ${allData.lng}`;
+        document.getElementById('longitude').innerHTML = `Longtitude: ${allData.lng}`;
         document.getElementById('latitude').innerHTML = `Latitude: ${allData.lat}`;
-        console.log(allData.lat);
         document.getElementById('placename').innerHTML = `City name: ${allData.name}`;
-        document.getElementById('date').innerHTML = `Date: ${allData.date}`;
         document.getElementById('country-name').innerHTML = `Country: ${allData.countryName}`;
         document.getElementById('temp').innerHTML = `Temperature: ${allData.temp}`;
         document.getElementById('description').innerHTML = `Description: ${allData.description}`;
+        
+        const destImage = document.createElement("img");
+        document.getElementById("destination-img").appendChild(destImage);
+        destImage.src = `${allData.img}`;
+
+        let createIconHolder = document.createElement("img");
+        document.getElementById("icon").appendChild(createIconHolder);
+        let weatherIcon = `https://www.weatherbit.io/static/img/icons/${allData.icon}.png`;
+        createIconHolder.setAttribute('src', weatherIcon);
 
     }catch(error){
         console.log("error", error);
