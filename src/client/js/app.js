@@ -34,6 +34,19 @@ const getWeatherbitData = async (lat, lng) => {
     }
 }
 
+//Get request to Pixabay
+const getImageData = async (city) => {
+    const res = await fetch(baseURL3 + apiKey3 + `&q=${city}&image_type=photo&pretty=true&category=places`);
+    try {
+    const image = await res.json();
+    const imageData = {};
+    imageData.webformatURL = image.hits[0].webformatURL;
+    return image;
+} catch (error) {
+    console.log("error", error);
+}
+}
+
 async function performAction(e) {
     const city = document.getElementById('city').value;
     const geoData = await getGeonamesData(baseURL, city, apiKey);
