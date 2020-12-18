@@ -5,13 +5,22 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
+    target: 'node',
     entry: './src/client/index.js',
     devtool: 'source-map',
     mode: 'production',
+    devServer: {
+        proxy: {
+            '/api': 'http://localhost:4040'
+        }
+    },
     output: {
-        library: 'Client'
+        library: 'Client',
+        libraryTarget: 'var'
     },
     module: {
         rules: [
@@ -24,6 +33,13 @@ module.exports = {
             test: /\.scss$/,
             exclude: /node_modules/,
             use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
+                },
+            {
+                    test: /\.(png|jpg|gif)$/,
+                    use: [{
+                        loader: 'file-loader',
+                        options: {}
+                    }]
                 }
         ]
     },
@@ -43,7 +59,8 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({ filename: "[name].css",
         chunkFilename: "[id].css"
-    })
+    }),
+        new WorkboxPlugin.GenerateSW()
     ],
     optimization: {
         minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
