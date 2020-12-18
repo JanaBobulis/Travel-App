@@ -17,7 +17,6 @@ const getGeonamesData = async (baseURL, city, apiKey)=>{
     const res = await fetch(baseURL + city + apiKey);
     try {
         const data = await res.json();
-        console.log("Geonames get request", data);
         return data;
     } catch(error) {
         console.log("error", error);
@@ -29,48 +28,33 @@ const getWeatherbitData = async (lat, lng) => {
     const res = await fetch(baseURL2 + "lat=" + lat + "&lon=" + lng + apiKey2);
     try {
         const data = await res.json();
-        const weatherData = {};
-        weatherData.description = data.data[0].weather.description;
-        weatherData.temp = data.data[0].temp;
-        console.log("weatherbit get request", data);
         return data;
     } catch(error) {
         console.log("error", error);
     }
 }
 
-// Event listener to add function to existing HTML DOM element with a callback function to execute when it is clicked. Inside that callback function call your async GET request with the parameters: base url user entered zip code (see input in html with id zip),personal API key
-
 async function performAction(e) {
     const city = document.getElementById('city').value;
     const geoData = await getGeonamesData(baseURL, city, apiKey);
-    console.log(geoData, "geonames API works");
 
     const res = await postData('/add', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, date: newDate, name: geoData.geonames[0].name, countryName: geoData.geonames[0].countryName});
 
-    console.log("response from geonames", res);
     const lat = res.lat;
     const lon = res.lng;
 
-    //gets data from the above geonames response (latitude, longtitude) and passes on to weatherbit
-    console.log("receiving from getWeatherbit", lat, lon);
     await getWeatherbitData(lat, lon);
 
     const weatherbitData = await getWeatherbitData(lat, lon);
-    console.log(weatherbitData, "weatherbit API works");
 
     const responses = await postData('/add', {temp: weatherbitData.data[0].temp, description: weatherbitData.data[0].weather.description});
-    console.log(responses);
     
     //countdown 
     const end = document.getElementById("dep-date").value
     const now = new Date().getTime; 
     const departure = new Date(end).getTime();
-    console.log(departure);
 
-    const daysTil =  Math.ceil(((departure-d.getTime())/(1000 * 60 * 60 * 24)));
-    console.log(daysTil);
-       
+    const daysTil =  Math.ceil(((departure-d.getTime())/(1000 * 60 * 60 * 24)));  
     document.getElementById("countdown-entry").innerHTML = `Days until departure: ${daysTil} days`;
 
     updateUI()
@@ -89,14 +73,12 @@ const updateUI = async() => {
         document.getElementById('country-name').innerHTML = `Country: ${allData.countryName}`;
         document.getElementById('temp').innerHTML = `Temperature: ${allData.temp}`;
         document.getElementById('description').innerHTML = `Description: ${allData.description}`;
-        console.log(allData.description);
 
     }catch(error){
         console.log("error", error);
     }
 }
 
-//Finally, chain another Promise that updates the UI dynamically Write another async function that is called after the completed POST request. This function should retrieve data from our app, select the necessary elements on the DOM (index.html), and then update their necessary values to reflect the dynamic values for: Temperature, Date, User input
 const postData = async (url ='', data = {}) => {
     const res = await fetch(url, {
         method: 'POST',
