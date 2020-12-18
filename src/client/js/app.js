@@ -48,29 +48,43 @@ const getImageData = async (city) => {
 }
 
 async function performAction(e) {
-    const city = document.getElementById('city').value;
-    const geoData = await getGeonamesData(baseURL, city, apiKey);
-
-    const res = await postData('/add', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, date: newDate, name: geoData.geonames[0].name, countryName: geoData.geonames[0].countryName});
-
-    const lat = res.lat;
-    const lon = res.lng;
-
-    await getWeatherbitData(lat, lon);
-
-    const weatherbitData = await getWeatherbitData(lat, lon);
-
-    const responses = await postData('/add', {temp: weatherbitData.data[0].temp, description: weatherbitData.data[0].weather.description});
-    
-    //countdown 
+    /////////////COUNTDOWN//////////// 
     const end = document.getElementById("dep-date").value
     const now = new Date().getTime; 
     const departure = new Date(end).getTime();
 
-    const daysTil =  Math.ceil(((departure-d.getTime())/(1000 * 60 * 60 * 24)));  
-    document.getElementById("countdown-entry").innerHTML = `Days until departure: ${daysTil} days`;
+    const daysTil =  Math.ceil(((departure-d.getTime())/(1000 * 60 * 60 * 24)));
 
-    updateUI()
+    let city = document.getElementById('city').value;
+
+    /////////////GEONAMES////////////////
+    const geoData = await getGeonamesData(baseURL, city, apiKey);
+
+    const res = await postData('/add', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, name: geoData.geonames[0].name, date: end, left: daysTil, countryName: geoData.geonames[0].countryName});
+
+    const lat = res.lat;
+    const lon = res.lng;
+    const name = res.name;
+
+    //gets data from the above geonames response (latitude, longitude) and passes on to weatherbit
+    await getWeatherbitData(lat, lon);
+    await getImageData(name);
+
+    //////////////WEATHERBIT/////////////////
+    if(daysTil <= 16){
+    const weatherbitData = await getWeatherbitData(lat, lon);
+    
+   const res2 = await postData('/add', {temp: weatherbitData.data[daysTil].temp, description: weatherbitData.data[daysTil].weather.description, icon: weatherbitData.data[daysTil].weather.icon});
+    console.log("16 days forecast", res2);
+    } else {
+    alert("Please note, weather temperature is only available for the next 16 days. Please come back later for an accurate temperature check")
+    }
+
+    ////////////////PIXABAY////////////////
+    const getPixabayData = await getImageData(name);
+    const res3 = await postData('/add', {img: getPixabayData.hits[0].webformatURL});
+
+    updateUI();
 }
 
 const updateUI = async() => {
