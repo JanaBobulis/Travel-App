@@ -19,7 +19,6 @@ body{
     margin: 0 auto;
 }
 
-
 .headline {
     font-size: 44px;
     grid-area: head;
@@ -50,7 +49,6 @@ body{
         padding: 17px;
         margin: 15px;
     }
-    
     button{
         width: 200px;
         height: 50px;
@@ -85,6 +83,7 @@ body{
     h2 {
         font-size: 27px;
     }
+    
     .response {
         grid-area: response;
         display: flex;
@@ -104,6 +103,7 @@ body{
                 height: 100%;
             }
         }
+        
         #icon {
             margin: 10px auto;
             padding: 7px;
@@ -114,8 +114,6 @@ body{
                 width: 60px;
             }
         } 
-
-
 
     .entry{
             //width: 150px;
@@ -151,11 +149,7 @@ body{
             }
         }   
     }
-    
-    
 }
-
-
 
 .myInput{
     justify-content: center;
