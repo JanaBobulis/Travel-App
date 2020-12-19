@@ -62,7 +62,7 @@ async function performAction(e) {
     /////////////GEONAMES////////////////
     const geoData = await getGeonamesData(baseURL, city, apiKey);
 
-    const res = await postData('/add', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, name: geoData.geonames[0].name, date: end, left: daysTil, countryName: geoData.geonames[0].countryName});
+    const res = await postData('http://localhost:4040/add', {lng: geoData.geonames[0].lng, lat: geoData.geonames[0].lat, name: geoData.geonames[0].name, date: end, left: daysTil, countryName: geoData.geonames[0].countryName});
 
     const lat = res.lat;
     const lon = res.lng;
@@ -76,7 +76,7 @@ async function performAction(e) {
     if(daysTil <= 16){
     const weatherbitData = await getWeatherbitData(lat, lon);
     
-   const res2 = await postData('/add', {temp: weatherbitData.data[daysTil].temp, description: weatherbitData.data[daysTil].weather.description, icon: weatherbitData.data[daysTil].weather.icon});
+   const res2 = await postData('http://localhost:4040/add', {temp: weatherbitData.data[daysTil].temp, description: weatherbitData.data[daysTil].weather.description, icon: weatherbitData.data[daysTil].weather.icon});
     console.log("16 days forecast", res2);
     } else {
     alert("Please note, weather temperature is only available for the next 16 days. Please come back later for an accurate temperature check")
@@ -84,7 +84,7 @@ async function performAction(e) {
 
     ////////////////PIXABAY////////////////
     const getPixabayData = await getImageData(name);
-    const res3 = await postData('/add', {img: getPixabayData.hits[0].webformatURL});
+    const res3 = await postData('http://localhost:4040/add', {img: getPixabayData.hits[0].webformatURL});
 
     updateUI();
 }
