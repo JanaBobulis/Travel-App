@@ -93,24 +93,57 @@ const updateUI = async() => {
     const req = await fetch('http://localhost:4040/all');
     try{
         const allData = await req.json();
-        document.getElementById('longitude').innerHTML = `Longtitude: ${allData.lng}`;
-        document.getElementById('latitude').innerHTML = `Latitude: ${allData.lat}`;
-        document.getElementById('placename').innerHTML = `City name: ${allData.name}`;
-        document.getElementById('country-name').innerHTML = `Country: ${allData.countryName}`;
-        document.getElementById('temp').innerHTML = `Temperature: ${allData.temp}`;
-        document.getElementById('description').innerHTML = `Description: ${allData.description}`;
+        document.getElementById('longitude').innerHTML = `lon: ${allData.lng}`;
+        document.getElementById('latitude').innerHTML = `lat: ${allData.lat}`;
+        document.getElementById('placename').innerHTML = `${allData.name}`;
+        document.getElementById('country-name').innerHTML = `${allData.countryName}`;
+        document.getElementById('temp').innerHTML = `${allData.temp} °C`;
+        document.getElementById("countdown-entry").innerHTML = `Departure in ${allData.left} days`;
+        document.getElementById('date').innerHTML = `${allData.date}`;
         
-        const destImage = document.createElement("img");
-        document.getElementById("destination-img").appendChild(destImage);
-        destImage.src = `${allData.img}`;
+        document.getElementById('description').innerHTML = `${allData.description}`;
 
-        let createIconHolder = document.createElement("img");
-        document.getElementById("icon").appendChild(createIconHolder);
-        let weatherIcon = `https://www.weatherbit.io/static/img/icons/${allData.icon}.png`;
-        createIconHolder.setAttribute('src', weatherIcon);
+        if(document.getElementById('dest-image')){
+            document.getElementById('dest-image').setAttribute('src', `${allData.img}`)
+        } else {
+            const destImage = document.createElement("img");
+            document.getElementById("destination-img").appendChild(destImage);
+            destImage.setAttribute('id', 'dest-image')
+            destImage.src = `${allData.img}`;
+        }
 
+        if(document.getElementById('icon-holder')){
+            let weatherIcon = `https://www.weatherbit.io/static/img/icons/${allData.icon}.png`;
+            document.getElementById('icon-holder').setAttribute('src', weatherIcon)
+        } else {
+            let createIconHolder = document.createElement("img");
+            document.getElementById("icon").appendChild(createIconHolder);
+            let weatherIcon = `https://www.weatherbit.io/static/img/icons/${allData.icon}.png`;
+            createIconHolder.setAttribute('src', weatherIcon);
+            createIconHolder.setAttribute('id', 'icon-holder')
+        }
     }catch(error){
         console.log("error", error);
+    }
+}
+
+const postData = async (url ='', data = {}) => {
+    const res = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    try {
+        const newData = await res.json();
+        console.log(newData);
+            return newData;
+    } catch(error) {
+        console.log('error', error);
     }
 }
 
