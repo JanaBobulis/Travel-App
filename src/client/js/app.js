@@ -1,16 +1,18 @@
-/* Global Variables */
 
-// Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 // Personal API Key for Geonames
 const baseURL = 'http://api.geonames.org/search?name=';
-const apiKey = '&maxRows=1&type=json&maxRows=10&username=janabobulis';
+const apiKey = process.env.apiKey;
 
 // Personal API Key for Weatherbit
 const baseURL2 = 'https://api.weatherbit.io/v2.0/forecast/daily?'; 
-const apiKey2 = '&key=8ce0780333904b48a0c241412d32cccc';
+const apiKey2 = process.env.apiKey2;
+
+//Personal API Key for pixabay
+const baseURL3 = "https://pixabay.com/api/";
+const apiKey3 = process.env.apiKey3;
 
 //Get request to Geonames
 const getGeonamesData = async (baseURL, city, apiKey)=>{
