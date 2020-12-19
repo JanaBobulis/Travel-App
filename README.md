@@ -11,7 +11,7 @@ Combination of Geonames, Weatherbit and Pixabay APIs were used in order to get t
 Please note, that you would need to obtain your personal API keys since they are protected in this project.
 
 ### To do list
-As an addition, "to-do" list is available to add on items needed for the trip.
+As an addition, "to-do" list is available to add on items needed for the trip. You can add and remove items - either one by one or all at once by pressing 'clear' button.
 
 ### Service Workers
 Service workers are installed in order for the project to be available when server is stopped. 
